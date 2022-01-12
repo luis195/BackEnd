@@ -9,7 +9,7 @@ class Contenedor {
             .then(contenido => {
 
                 let objetoEditable = JSON.parse(contenido)
-                producto.id = objetoEditable.length + 1
+                producto.id = objetoEditable.length
                 objetoEditable.push(producto)
                 let objetoAlmacenar = JSON.stringify(objetoEditable)
 
@@ -26,12 +26,13 @@ class Contenedor {
         })
 
     }
-    getById(id){
+    getById(identificacion){
         fs.promises.readFile('productos.txt','utf-8')
             .then(contenido => {
                 let objetoEditable = JSON.parse(contenido)
-                if (id >= 0 && id < objetoEditable.length){
-                    console.log(objetoEditable[id-1])
+                let elemento = objetoEditable.findIndex(ind => ind.id === identificacion)
+                if (elemento !== -1){
+                    console.log(objetoEditable[elemento])
                 }
                 else {
                     console.log(null)
@@ -53,12 +54,24 @@ class Contenedor {
             })
 
     }
-    deleteById(id){
+    deleteAll(){
+        fs.promises.writeFile('productos.txt', '[]')
+            .then((p) => {
+                console.log('Objeto guardado ')
+            })
+            .catch(() => {
+                console.log('error de guaraddo')
+            })
+    }
+    deleteById(identificacion){
+
         fs.promises.readFile('productos.txt','utf-8')
             .then(contenido => {
                 let objetoEditable = JSON.parse(contenido)
-                if (id >= 0 && id < objetoEditable.length){
-                    objetoEditable = objetoEditable.splice(id-1)
+
+                let objetoEliminar = objetoEditable.findIndex(ind => ind.id === identificacion)
+                if (objetoEliminar !== -1){
+                    objetoEditable.splice(objetoEliminar,1)
                     let objetoAlmacenar = JSON.stringify(objetoEditable)
 
                     fs.promises.writeFile('productos.txt', objetoAlmacenar)
@@ -69,8 +82,8 @@ class Contenedor {
                             console.log('error de guaraddo')
                         })
                 }
-                else {
-                    console.log(null)
+                else{
+                    console.log("no existe ese ID")
                 }
 
 
@@ -79,8 +92,17 @@ class Contenedor {
             .catch(err => {
                 console.log('error de lectura', err)
             })
-
+        }
     }
+let object = {
+    title: 'regla',
+    price: 10,
+    thumbnail: 'http link'
+}
 
-    }
-
+contenido = new Contenedor('productos.txt')
+contenido.getAll()
+//contenido.save(object)
+contenido.getById(5)
+//contenido.deleteById()
+//contenido.deleteAll()
