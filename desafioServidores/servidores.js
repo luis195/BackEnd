@@ -48,21 +48,13 @@ class Contenedor {
     }
     getAll(){
         fs.promises.readFile('productos.txt','utf-8')
-                .then(contenido => {
-                    let objetoEditable = JSON.parse(contenido)
+                .then(contenidos => {
+                    let objetoEditable = JSON.parse(contenidos)
                     console.log(objetoEditable)
-
                 })
                 .catch(err => {
                     console.log('error de lectura', err)
                 })
-        let b = fs.promises.readFile('productos.txt','utf-8')
-            .then(contenido => {
-                let objetoEditable = JSON.parse(contenido)
-                console.log(objetoEditable)
-                return objetoEditable
-            })
-        return b
     }
     deleteAll(){
         fs.promises.writeFile('productos.txt', '[]')
@@ -113,13 +105,15 @@ app.get('/', (req, res) => {
     res.send(`<h1>Bienvenidos a mi servidor Express</h1>`)
 })
 
-app.get('/productos', (req, res) => {
-    let getAll = contenido.getAll()
-    res.send(`${getAll}`)
+app.get('/productos', async (req, res) => {
+    let productos = await contenido.getAll()
+    res.send(`${productos}`)
 })
 
-app.get('/fyh', (req,res) => {
-    res.send(`Hoy es lunes`)
+app.get('/productRandom', async (req,res) => {
+    let id = Math.floor(Math.random() * 4);
+    let productos = await contenido.getById(id)
+    res.send(`${productos}`)
 })
 
 
