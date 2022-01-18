@@ -47,15 +47,22 @@ class Contenedor {
             })
     }
     getAll(){
-        return fs.promises.readFile('productos.txt','utf-8')
+        fs.promises.readFile('productos.txt','utf-8')
                 .then(contenido => {
                     let objetoEditable = JSON.parse(contenido)
                     console.log(objetoEditable)
+
                 })
                 .catch(err => {
                     console.log('error de lectura', err)
                 })
-
+        let b = fs.promises.readFile('productos.txt','utf-8')
+            .then(contenido => {
+                let objetoEditable = JSON.parse(contenido)
+                console.log(objetoEditable)
+                return objetoEditable
+            })
+        return b
     }
     deleteAll(){
         fs.promises.writeFile('productos.txt', '[]')
