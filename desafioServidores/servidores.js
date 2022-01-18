@@ -30,12 +30,13 @@ class Contenedor {
 
     }
     getById(identificacion){
-        fs.promises.readFile('productos.txt','utf-8')
+        let b = fs.promises.readFile('productos.txt','utf-8')
             .then(contenido => {
                 let objetoEditable = JSON.parse(contenido)
                 let elemento = objetoEditable.findIndex(ind => ind.id === identificacion)
                 if (elemento !== -1){
-                    console.log(objetoEditable[elemento])
+                    //console.log(objetoEditable[elemento])
+                    return objetoEditable
                 }
                 else {
                     console.log(null)
@@ -45,16 +46,20 @@ class Contenedor {
             .catch(err => {
                 console.log('error de lectura', err)
             })
+        return b
     }
     getAll(){
-        fs.promises.readFile('productos.txt','utf-8')
+        let b = fs.promises.readFile('productos.txt','utf-8')
                 .then(contenidos => {
                     let objetoEditable = JSON.parse(contenidos)
-                    console.log(objetoEditable)
+                    //console.log(objetoEditable)
+                    return objetoEditable
                 })
+
                 .catch(err => {
                     console.log('error de lectura', err)
                 })
+        return b
     }
     deleteAll(){
         fs.promises.writeFile('productos.txt', '[]')
@@ -97,7 +102,7 @@ class Contenedor {
     }
 }
 
-let contenido = new Contenedor
+let contenido = new Contenedor();
 
 app.get('/');
 
@@ -112,7 +117,7 @@ app.get('/productos', async (req, res) => {
 
 app.get('/productRandom', async (req,res) => {
     let id = Math.floor(Math.random() * 4);
-    let productos = await contenido.getById(id)
+    let productos = await contenido.getById(2)
     res.send(`${productos}`)
 })
 
