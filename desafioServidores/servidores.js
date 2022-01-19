@@ -30,15 +30,15 @@ class Contenedor {
 
     }
     getById(identificacion){
-        let b = fs.promises.readFile('productos.txt','utf-8')
+
+        return fs.promises.readFile('productos.txt', 'utf-8')
             .then(contenido => {
                 let objetoEditable = JSON.parse(contenido)
                 let elemento = objetoEditable.findIndex(ind => ind.id === identificacion)
-                if (elemento !== -1){
+                if (elemento !== -1) {
                     //console.log(objetoEditable[elemento])
-                    return objetoEditable
-                }
-                else {
+                    return objetoEditable[elemento]
+                } else {
                     console.log(null)
                 }
 
@@ -46,20 +46,18 @@ class Contenedor {
             .catch(err => {
                 console.log('error de lectura', err)
             })
-        return b
     }
     getAll(){
-        let b = fs.promises.readFile('productos.txt','utf-8')
-                .then(contenidos => {
-                    let objetoEditable = JSON.parse(contenidos)
-                    //console.log(objetoEditable)
-                    return objetoEditable
-                })
+        return fs.promises.readFile('productos.txt', 'utf-8')
+            .then(contenidos => {
+                let objetoEditable = JSON.parse(contenidos)
+                //console.log(objetoEditable)
+                return objetoEditable
+            })
 
-                .catch(err => {
-                    console.log('error de lectura', err)
-                })
-        return b
+            .catch(err => {
+                console.log('error de lectura', err)
+            })
     }
     deleteAll(){
         fs.promises.writeFile('productos.txt', '[]')
@@ -104,6 +102,7 @@ class Contenedor {
 
 let contenido = new Contenedor();
 
+
 app.get('/');
 
 app.get('/', (req, res) => {
@@ -112,13 +111,13 @@ app.get('/', (req, res) => {
 
 app.get('/productos', async (req, res) => {
     let productos = await contenido.getAll()
-    res.send(`${productos}`)
+    res.send(productos)
 })
 
 app.get('/productRandom', async (req,res) => {
     let id = Math.floor(Math.random() * 4);
-    let productos = await contenido.getById(2)
-    res.send(`${productos}`)
+    let productos = await contenido.getById(id)
+    res.send(productos)
 })
 
 
