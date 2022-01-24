@@ -107,6 +107,7 @@ app.get('/');
 
 app.get('/', (req, res) => {
     res.send(`<h1>Bienvenidos a mi servidor Express</h1>`)
+
 })
 
 app.get('/productos', async (req, res) => {
@@ -118,10 +119,11 @@ app.get('/productRandom', async (req,res) => {
     let id = Math.floor(Math.random() * 4);
     let productos = await contenido.getById(id)
     res.send(productos)
+
 })
 
 
 const server = app.listen(PORT, () =>{
     const {port} = server.address();
-    console.log(`Servidor escuchando  en el puerto ${port}`)
+    console.log(`Servidor escuchando en el puerto ${port}`)
 })
