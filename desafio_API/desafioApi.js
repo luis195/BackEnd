@@ -112,6 +112,6 @@ productos.delete('/productos/:id',(req, res) => {
     res.json(respuesta)
 })
 
-
+app.use('/static', express.static('public'))
 app.use('/api', productos)
 app.listen(8080)
