@@ -1,0 +1,27 @@
+
+<body>
+
+    <form method="POST" action = "http://localhost:8080/">
+        nombre
+        <label>
+            <input name="title" type="text"/>
+        </label>
+        precio
+        <label>
+            <input name="price" type="text"/>
+        </label>
+        http
+        <label>
+            <input name="thumbnail" type="text"/>
+        </label>
+        <input type="submit" value="send"/>
+    </form>
+    {{#if listExists:true}}
+        <ul>
+            {{#each listaProductos}}
+                <li class={{this.tittle}}></li>
+            {{/each}}
+        </ul>
+    {{/if}}
+
+</body>
