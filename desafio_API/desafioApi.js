@@ -45,6 +45,7 @@ productos.get('/',(req, res) => {
 
 
 productos.get('/productos',(req, res) => {
+    console.log(listaProductos)
     res.json(listaProductos)
 })
 
