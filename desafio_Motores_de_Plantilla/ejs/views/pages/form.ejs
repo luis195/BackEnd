@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div class = "container-fluid">
+    <div class="card card-outline-secondary">
+        <div class="card-header">
+            <h3 class="mb-0">Agregar Producto</h3>
+        </div>
+        <div class="card-body">
+            <form autocomplete="off" class="form" role="form" method="post" action="http://localhost:8080/productos">
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Precio</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">HTTP</label>
+                    <div class="col-lg-9">
+                        <input class="form-control" type="text" value="">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label"></label>
+                    <div class="col-lg-9">
+                        <input class="btn btn-secondary" type="reset" value="Cancel">
+                        <input class="btn btn-primary" type="submit" value="Agregar">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%if (lista.title !== undefined){ %>
+<table class="table" >
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Emoji</th>
+    </tr>
+    </thead>
+    <tbody>
+
+     <%for(var i=0; i < lista.length; i++) { %>
+        <tr>
+            <td><%= lista[i].id %></td>
+            <td><%= lista[i].title %></td>
+            <td><%= lista[i].price %></td>
+            <td><img src="<%= lista[i].thumbnail %>" WIDTH="50PX"> </td>
+        </tr>
+    <% }} else {%>
+
+        <div align="center"><h3>No Hay productos para mostrar</h3></div>
+    <%}%>
+
+    </tbody>
+</table>
+</div>
+
+
+</body>
+</html>

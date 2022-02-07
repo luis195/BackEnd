@@ -1,0 +1,51 @@
+extends layout.pug
+
+block formulario
+
+    head
+        meta(charset='utf-8')
+        title Title2
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+
+        body
+            .modal-dialog
+                .modal-content
+                    // Modal Header
+                    .modal-header
+                        button.close(type="button", data-dismiss="modal")
+                            span(aria-hidden="true") ×
+                            span.sr-only Close
+                        h4#myModalLabel.modal-title
+                            | Ingrese Producto
+                    // Modal Body
+                    .modal-body
+                        //#editForm.form(role='form' method='GET' action='https://www.google.com/')
+                        form(role='form' method='POST' action='http://localhost:8080/productos')
+                            div.form-group
+                                label(for='title') Nombre:
+                                input#title.form-control(type='text', placeholder='nombre' name='title')
+                            div.form-group
+                                label(for='price') Precio:
+                                input#price.form-control(type='price', placeholder='precio' name='price')
+                            div.form-group
+                                label(for='thumbnail') Link:
+                                input#thumbnail.form-control(type='thumbnail', placeholder='thumbnail' name='thumbnail')
+                            button.btn.btn-primary(type="submit", value="send") Agregar
+
+                                | Close
+    if lista.length > 0
+        table(style='width:100%'  , border='1', align= "center" )
+            tr
+                th nombre
+                th precio
+                th http
+                th id
+            each producto in lista
+                tr
+                    td= producto.title
+                    td= producto.price
+                    td
+                        img(src = producto.thumbnail style="display:flex;" width="50PX" align = "center" )
+                    td= producto.id
+    else
+        p No hay productos en la lista

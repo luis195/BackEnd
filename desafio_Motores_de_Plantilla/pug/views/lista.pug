@@ -1,0 +1,17 @@
+extends layout.pug
+
+block lista
+
+
+    table(style='width:100%' , border='1')
+        tr
+            th nombre
+            th precio
+            th http
+            th id
+        each producto in lista
+            tr
+                td= producto.title
+                td= producto.price
+                td= producto.thumbnail
+                td= producto.id
