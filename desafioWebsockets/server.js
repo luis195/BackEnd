@@ -5,25 +5,26 @@ const {Server: IOServer} = require ('socket.io')
 const app = express()
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
+const mensajes = []
 
 app.use (express.static('./public'))
-app.get('/', (req, res) =>{
-    res.sendFile('index.html', {root: __dirname})
-})
+    io.on('connection',(socket) => {
+        console.log('nuevo usuario conectado')
 
-httpServer.listen(3000, ()=>{
-    console.log('Server on port 3000')
-})
+        socket.emit('mensajes', mensajes)
 
-io.on('connection',(socket) =>{
-    console.log('nuevo usuario conectado')
-    socket.emit('mensajes', mensajes)
-    socket.on('mensaje', data =>{
-        mensajes.push({socketid: socket.id, mensaje: data})
-        io.sockets.emit('mensajes', mensajes)
+        socket.on('mensaje', data => {
+            mensajes.push({socketid: socket.id, mensaje: data})
+            io.sockets.emit('mensajes', mensajes)
 
+        })
     })
 
-    socket.emit('mi mensaje','hola estas conectado a nuestro server')
+
+const PORT = 8080
+const connectedServer = httpServer.listen(PORT, function (){
+    console.log(`servidor HTTP con websockets escuchando en el puerto ${connectedServer.address().port}`)
 })
+
+connectedServer.on('error', error => console.log(`error en el servidor ${error}`))
 
