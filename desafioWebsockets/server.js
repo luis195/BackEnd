@@ -6,6 +6,7 @@ const app = express()
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
 const mensajes = []
+const listas= []
 
 app.use (express.static('./public'))
     io.on('connection',(socket) => {
@@ -16,7 +17,13 @@ app.use (express.static('./public'))
         socket.on('new-message', data => {
             mensajes.push(data)
             io.sockets.emit('mensajes', mensajes)
+        })
 
+        socket.emit('listas', listas)
+
+        socket.on('new-product', datos =>{
+            listas.push(datos)
+            io.sockets.emit('listas', listas)
         })
     })
 

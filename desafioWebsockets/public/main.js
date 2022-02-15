@@ -17,4 +17,37 @@ function addMessage(e) {
 }
 
 
+function addLista(e) {
+    const lista = {
+        author: document.getElementById('title').value,
+        text: document.getElementById('price').value,
+        text: document.getElementById('thumb').value
+    };
+    socket.emit('new-product', lista);
+    return false;
+}
+function renderLista(lista) {
+    const html = lista.map((elem, index) => {
+        return(`
+
+<div>
+<table>
+    <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>precio</th>
+        <th>imagen</th>
+    </tr> 
+    <tr>
+        <th>1</th>
+        <th>${elem.title}</th>
+        <th>${elem.price}</th>
+        <th>${elem.thumbnail}</th>
+</tr>
+</div>`)
+    }).join(" ");
+    document.getElementById('listas').innerHTML = html;
+}
+
 socket.on('mensajes', function(data) { render(data); });
+socket.on('listas', function(datos) { renderLista(datos); });
