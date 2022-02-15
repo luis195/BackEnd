@@ -13,8 +13,8 @@ app.use (express.static('./public'))
 
         socket.emit('mensajes', mensajes)
 
-        socket.on('mensaje', data => {
-            mensajes.push({socketid: socket.id, mensaje: data})
+        socket.on('new-message', data => {
+            mensajes.push(data)
             io.sockets.emit('mensajes', mensajes)
 
         })
