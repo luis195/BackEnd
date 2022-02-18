@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Sockets</title>
     <link rel="stylesheet" href="style.css">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
 
 </head>
+
 <body>
-    <h1>Cliente Websockets</h1>
-
-        <input type="text">
-
-    <button>Enviar</button>
+    <div id="mensajes"></div>
+    <form onsubmit="return addMessage(this)">
+        <input type="text" id="username" placeholder="Tu Nombre" >
+        <input type="text" id="texto" placeholder="Cuéntanos algo...">
+        <input type="submit" value="Enviar">
+    </form>
     <p></p>
-    <script src="./js/main.js"></script>
+    <div class = "container-fluid">
+        <div class="card card-outline-secondary">
+            <div class="card-header">
+                <h3 class="mb-0">Agregar Producto</h3>
+            </div>
+            <div class="card-body">
+                <form autocomplete="off" class="form" role="form" onsubmit="addLista(this)">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="" id="title" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label" >Precio</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="" name="price" id="price">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">HTTP</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="" name="thumbnail" id="thumb">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input class="btn btn-secondary" type="reset" value="Cancel">
+                            <input class="btn btn-primary" type="submit" value="Agregar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="listas"></div>
 </body>
 </html>
