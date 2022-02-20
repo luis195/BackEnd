@@ -64,9 +64,9 @@ class Carrito {
 
     //metodo para DELETE: '/:id/productos/:id_prod'
     borrar(id) {
-        const index = this.productos.findIndex(prod => prod.id === id)
+        const index = this.productosEnCarrito.findIndex(prod => prod.id === id)
         if (index !== -1) {
-            return this.productos.splice(index, 1)
+            return this.productosEnCarrito.splice(index, 1)
         } else {
             return { error: 'producto no encontrado' }
         }
@@ -78,13 +78,25 @@ class Carrito {
 class TodosLosCarritos {
     constructor() {
         this.carritos = []
+        this.idCarrito = 0
     }
     // metodo para POST: '/' - Crea un carrito y devuelve su id.
     crearCarrito(){
-        let idNuevoCarrito = this.carritos.length + 1
+        let idNuevoCarrito = this.idCarrito + 1
         let carritoNuevo = new Carrito([], idNuevoCarrito)
         this.carritos.push(carritoNuevo)
         return carritoNuevo.id
+    }
+    // metodo DELETE: '/:id' - Vacía un carrito y lo elimina.
+    borrarCarrito(idCarrito){
+
+        const index = this.carritos.findIndex(carritoBorrado => carritoBorrado.idCarrito === idCarrito)
+        if (index !== -1) {
+            return this.carritos.splice(index, 1)
+        } else {
+            return { error: 'producto no encontrado' }
+        }
+
     }
 }
 
