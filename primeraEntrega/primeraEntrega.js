@@ -39,10 +39,11 @@ let listaProductos = [
         "id": 5
     }
 ]
-let listado = require("./controller/api.js")
-let carritos = require("./controller/api.js")
-let listadoProductos = new listado.ProductosApi()
-let totalCarritos = new carritos.ProductosApi()
+let objetos = require("./controller/api.js")
+let listadoProductos = new objetos.ProductosApi()
+let carritosAll = new objetos.TodosLosCarritos()
+
+
 listadoProductos.productos = listaProductos
 
 productos.get('/',(req, res) => {
