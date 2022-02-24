@@ -1,7 +1,8 @@
+fs = require('fs')
 // listado de productos
 class ProductosApi {
     constructor() {
-        this.productos = []
+        this.productos = JSON.parse(fs.readFileSync('./controller/productos.txt',"utf-8"))
         this.id = 0
         this.timeStamp = Date.now
     }
@@ -18,6 +19,7 @@ class ProductosApi {
     guardar(prod) {
         const newProd = { ...prod, id: ++this.id }
         this.productos.push(newProd)
+        fs.writeFileSync('./controller/productos.txt',JSON.stringify(this.productos,null,"\t") ,"utf-8")
         return newProd
     }
     //PUT
@@ -26,6 +28,7 @@ class ProductosApi {
         const index = this.productos.findIndex(p => p.id === id)
         if (index !== -1) {
             this.productos[index] = newProd
+            fs.writeFileSync('./controller/productos.txt',JSON.stringify(this.productos,null,"\t") ,"utf-8")
             return newProd
         } else {
             return { error: 'producto no encontrado' }
@@ -35,6 +38,7 @@ class ProductosApi {
     borrar(id) {
         const index = this.productos.findIndex(prod => prod.id === id)
         if (index !== -1) {
+            fs.writeFileSync('./controller/productos.txt',JSON.stringify(this.productos,null,"\t") ,"utf-8")
             return this.productos.splice(index, 1)
         } else {
             return { error: 'producto no encontrado' }
@@ -52,6 +56,7 @@ class Carrito {
 
     //metodo para GET obtener todos los productos del carrito
     listarAll() {
+
         return this.productosEnCarrito
     }
 
@@ -77,26 +82,42 @@ class Carrito {
 //clase que almacena todos los carritos de compra
 class TodosLosCarritos {
     constructor() {
-        this.carritos = []
-        this.idCarrito = 0
+        this.carritos = JSON.parse(fs.readFileSync('./controller/carritos.txt' ,"utf-8"))
     }
     // metodo para POST: '/' - Crea un carrito y devuelve su id.
     crearCarrito(){
-        let idNuevoCarrito = this.idCarrito + 1
+        let idNuevoCarrito = this.carritos.length + 1
         let carritoNuevo = new Carrito([], idNuevoCarrito)
         this.carritos.push(carritoNuevo)
+        fs.writeFileSync('./controller/carritos.txt',JSON.stringify(this.carritos,null,"\t") ,"utf-8")
         return carritoNuevo.id
     }
     // metodo DELETE: '/:id' - Vacía un carrito y lo elimina.
-    borrarCarrito(idCarrito){
 
-        const index = this.carritos.findIndex(carritoBorrado => carritoBorrado.idCarrito === idCarrito)
+    borrarCarrito(id){
+        console.log(this.carritos)
+        const index = this.carritos.findIndex(kart => kart.id === id)
         if (index !== -1) {
-            return this.carritos.splice(index, 1)
+            this.carritos = this.carritos.splice(index, 1)
+            console.log(this.carritos)
+            fs.writeFileSync('./controller/carritos.txt',JSON.stringify(this.carritos,null,"\t") ,"utf-8")
+            return this.carritos
         } else {
             return { error: 'producto no encontrado' }
         }
 
+    }
+
+    borrarProductoCarrito(idCarrito,idProducto){
+        const indexCarrito = this.carritos.findIndex(kart => kart.id === idCarrito)
+        const indexProducto = this.carritos[indexCarrito].productosEnCarrito.findIndex(prod => prod.id === idProducto)
+        if (indexCarrito && indexProducto !== -1) {
+            this.carritos[indexCarrito].productosEnCarrito = this.carritos[indexCarrito].productosEnCarrito.splice(indexProducto, 1)
+            fs.writeFileSync('./controller/carritos.txt',JSON.stringify(this.carritos,null,"\t") ,"utf-8")
+            return this.carritos
+        } else {
+            return { error: 'producto no encontrado' }
+        }
     }
 }
 

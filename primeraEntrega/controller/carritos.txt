@@ -1,0 +1,7 @@
+[
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645671804345,
+		"id": 5
+	}
+]

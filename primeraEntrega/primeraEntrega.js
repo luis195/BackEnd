@@ -9,53 +9,18 @@ app.use(express.urlencoded({extended: true}))
 
 let objetos = require("./controller/api.js")
 let listadoProductos = new objetos.ProductosApi()
-let carritosAll = new objetos.TodosLosCarritos()
-let listaProductos = [
-    {
-        "title": "lapiz",
-        "price": 13,
-        "thumbnail": "http link",
-        "id": 1
-    },
-    {
-        "title": "regla",
-        "price": 10,
-        "thumbnail": "http link",
-        "id": 2
-    },
-    {
-        "title": "cuaderno",
-        "price": 40,
-        "thumbnail": "http link",
-        "id": 3
-    },
-    {
-        "title": "auriculares",
-        "price": 20,
-        "thumbnail": "http link",
-        "id": 4
-    },
-    {
-        "title": "resma de papel",
-        "price": 77,
-        "thumbnail": "http link",
-        "id": 5
-    }
-]
-
-
-listadoProductos.productos = listaProductos
+let carritoIndividual = new objetos.Carrito()
+let listadoCarritos = new objetos.TodosLosCarritos()
 
 productos.get('/',(req, res) => {
     res.send('ok')
 })
 
 productos.get('/productos',(req, res) => {
-    console.log(listaProductos)
     res.json(listadoProductos.listarAll())
 })
 
-productos.get('/productos/:id',(req, res) => {
+productos.get('/productos/:id', async(req, res) => {
     console.log(req.params.id)
     let id = parseInt( req.params.id);
     res.json(listadoProductos.listar(id))
@@ -78,13 +43,15 @@ productos.delete('/productos/:id',(req, res) => {
     res.json(listadoProductos.borrar(id))
 })
 
-carrito.post('/',(req,res) =>{
-    res.json(carritosAll.crearCarrito())
+carrito.post('/carrito',(req,res) =>{
+    let carrito = listadoCarritos.crearCarrito()
+    res.send(`carrito creado con el id : ${carrito}` )
 })
-carrito.delete('/:id',(req,res) =>{
+carrito.delete('/carrito/:id',(req,res) =>{
 
     let id = parseInt( req.params.id);
-    res.json(carritosAll.borrarCarrito(id))
+    listadoCarritos.borrarCarrito(id)
+    res.json("Carrito eliminado")
 })
 carrito.get('/:id/productos',(req,res) =>{
     let id = parseInt( req.params.id);
@@ -94,13 +61,12 @@ carrito.get('/:id/productos',(req,res) =>{
 /*Hago la correccion de la consigna 2.d POST: '/:id/productos' - Para incorporar productos al carrito
 por su id de producto ya que se requiere la id del carrito y la id del producto a agregar*/
 
-/*carrito.post('/:id/productos/id_prod',(req,res) =>{
+carrito.delete('/:idProducto/productos/:idCarrito',(req,res) =>{
 
-    let nuevoCarrito = req.body
-    totalCarritos.guardar(nuevoCarrito)
-    res.json(totalCarritos.productos.length)
+    let a = req.body
+    console.log(a)
+    res.json(a)
 })
-carrito.delete*/
 app.use('/static', express.static('public'))
 app.use('/api', productos)
 app.use('/api',carrito)
