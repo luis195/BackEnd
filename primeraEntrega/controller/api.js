@@ -82,7 +82,7 @@ class Carrito {
 //clase que almacena todos los carritos de compra
 class TodosLosCarritos {
     constructor() {
-        this.carritos = JSON.parse(fs.readFileSync('./controller/carritos.txt' ,"utf-8"))
+        this.carritos = JSON.parse(fs.readFileSync('../controller/carritos.txt' ,"utf-8"))
     }
     // metodo para POST: '/' - Crea un carrito y devuelve su id.
     crearCarrito(){
@@ -106,6 +106,10 @@ class TodosLosCarritos {
             return { error: 'producto no encontrado' }
         }
 
+    }
+
+    listarCarrito(id){
+        return(this.carritos[id])
     }
 
     borrarProductoCarrito(idCarrito,idProducto){

@@ -1,5 +1,6 @@
 const express = require('express');
 const {json} = require("express");
+const fs = require("fs")
 const {Router} = express
 const app = express()
 const productos = Router()
@@ -55,17 +56,16 @@ carrito.delete('/carrito/:id',(req,res) =>{
 })
 carrito.get('/:id/productos',(req,res) =>{
     let id = parseInt( req.params.id);
-    res.json(carritosAll.carritos[id].listarAll())
+    console.log(listadoCarritos.carritos[id].listarAll())
+    res.json(listadoCarritos.carritos[id].listarAll())
 })
 
-/*Hago la correccion de la consigna 2.d POST: '/:id/productos' - Para incorporar productos al carrito
-por su id de producto ya que se requiere la id del carrito y la id del producto a agregar*/
+carrito.delete('/:id/productos/:id_prod',(req,res) =>{
 
-carrito.delete('/:idProducto/productos/:idCarrito',(req,res) =>{
-
-    let a = req.body
-    console.log(a)
-    res.json(a)
+    const idCarrito = req.params.id
+    const id_prod = req.params.id_prod
+    listadoCarritos.borrarProductoCarrito(idCarrito,id_prod)
+    res.send({Mensaje:" carrito eliminado"})
 })
 app.use('/static', express.static('public'))
 app.use('/api', productos)

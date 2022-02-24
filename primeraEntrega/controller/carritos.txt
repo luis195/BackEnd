@@ -1,7 +1,35 @@
 [
 	{
+		"productosEnCarrito": [
+			{
+				"title": "lapiz",
+				"price": 13,
+				"thumbnail": "http link",
+				"id": 1
+			},
+			{
+				"title": "regla",
+				"price": 10,
+				"thumbnail": "http link",
+				"id": 2
+			}
+		],
+		"timeStamp": 1645732784251,
+		"id": 1
+	},
+	{
 		"productosEnCarrito": [],
-		"timeStamp": 1645671804345,
-		"id": 5
+		"timeStamp": 1645732862993,
+		"id": 2
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645733078520,
+		"id": 3
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645733242447,
+		"id": 4
 	}
 ]
