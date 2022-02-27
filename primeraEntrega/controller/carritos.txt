@@ -8,10 +8,10 @@
 				"id": 1
 			},
 			{
-				"title": "regla",
-				"price": 10,
+				"title": "cuaderno",
+				"price": 40,
 				"thumbnail": "http link",
-				"id": 2
+				"id": 3
 			}
 		],
 		"timeStamp": 1645732784251,
@@ -19,17 +19,52 @@
 	},
 	{
 		"productosEnCarrito": [],
-		"timeStamp": 1645732862993,
+		"timeStamp": 1645744512031,
 		"id": 2
 	},
 	{
 		"productosEnCarrito": [],
-		"timeStamp": 1645733078520,
+		"timeStamp": 1645744512961,
 		"id": 3
 	},
 	{
 		"productosEnCarrito": [],
-		"timeStamp": 1645733242447,
+		"timeStamp": 1645744513748,
 		"id": 4
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645744514474,
+		"id": 5
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645744515228,
+		"id": 6
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645744515966,
+		"id": 7
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645744516651,
+		"id": 8
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645749509022,
+		"id": 9
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645749935994,
+		"id": 10
+	},
+	{
+		"productosEnCarrito": [],
+		"timeStamp": 1645752155831,
+		"id": 11
 	}
 ]

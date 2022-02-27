@@ -59,14 +59,33 @@ carrito.get('/:id/productos',(req,res) =>{
     console.log(listadoCarritos.carritos[id].listarAll())
     res.json(listadoCarritos.carritos[id].listarAll())
 })
+carrito.post('/:id/productos',(req,res)=>{
+    let idProd = parseInt(req.params.id)
+    let respuesta = listadoCarritos.incorporarProductoPorID(idProd)
 
-carrito.delete('/:id/productos/:id_prod',(req,res) =>{
+    if (respuesta === 0){
+        res.json("Producto no existe")
+    }
+    else {
+        listadoCarritos.carritos[0].productosEnCarrito.push(respuesta)
+        res.send("Producto agregado por ID al carrito")
+    }
 
-    const idCarrito = req.params.id
-    const id_prod = req.params.id_prod
-    listadoCarritos.borrarProductoCarrito(idCarrito,id_prod)
-    res.send({Mensaje:" carrito eliminado"})
+
 })
+carrito.delete('/:id/productos/:id_prod', (req, res) => {
+    try {
+        const idCarrito = Number(req.params.id)
+        const id_prod = Number(req.params.id_prod)
+        const productDeleted = listadoCarritos.borrarProductoCarrito(idCarrito, id_prod)
+        res.send({ status: 'success', productDeleted })
+    } catch (error) {
+        res.json(error.message)
+    }
+})
+
+carrito.post('/:id/productos')
+
 app.use('/static', express.static('public'))
 app.use('/api', productos)
 app.use('/api',carrito)

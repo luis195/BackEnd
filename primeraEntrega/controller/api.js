@@ -1,4 +1,4 @@
-fs = require('fs')
+let fs = require('fs')
 // listado de productos
 class ProductosApi {
     constructor() {
@@ -82,7 +82,7 @@ class Carrito {
 //clase que almacena todos los carritos de compra
 class TodosLosCarritos {
     constructor() {
-        this.carritos = JSON.parse(fs.readFileSync('../controller/carritos.txt' ,"utf-8"))
+        this.carritos = JSON.parse(fs.readFileSync('./controller/carritos.txt' ,"utf-8"))
     }
     // metodo para POST: '/' - Crea un carrito y devuelve su id.
     crearCarrito(){
@@ -112,16 +112,31 @@ class TodosLosCarritos {
         return(this.carritos[id])
     }
 
-    borrarProductoCarrito(idCarrito,idProducto){
-        const indexCarrito = this.carritos.findIndex(kart => kart.id === idCarrito)
-        const indexProducto = this.carritos[indexCarrito].productosEnCarrito.findIndex(prod => prod.id === idProducto)
-        if (indexCarrito && indexProducto !== -1) {
-            this.carritos[indexCarrito].productosEnCarrito = this.carritos[indexCarrito].productosEnCarrito.splice(indexProducto, 1)
-            fs.writeFileSync('./controller/carritos.txt',JSON.stringify(this.carritos,null,"\t") ,"utf-8")
-            return this.carritos
+    borrarProductoCarrito(idCarrito, idProducto) {
+        const carritos = JSON.parse(fs.readFileSync('./controller/carritos.txt', "utf-8"))
+        const carrito = carritos.filter(cart => cart.id === idCarrito)
+        if (carrito.length > 0) {
+            const indexProduct = carrito[0].productosEnCarrito.findIndex(prod => prod.id === idProducto)
+            if (indexProduct !== -1) {
+                const productDeleted = carrito[0].productosEnCarrito.splice(indexProduct, 1)
+                fs.writeFileSync('./controller/carritos.txt',JSON.stringify(carritos,null,"\t") ,"utf-8")
+                return productDeleted[0]
+            } else {
+                throw new Error(`El producto con id ${idProducto} no existe`)
+            }
         } else {
-            return { error: 'producto no encontrado' }
+            throw new Error(`El carrito con id ${idCarrito} no existe`)
         }
+    }
+
+    incorporarProductoPorID(idProducto) {
+        let productoIncorporar = 0
+        let listadoActual = JSON.parse(fs.readFileSync('./controller/productos.txt', "utf-8"))
+        for (let i = 0; i < listadoActual.length; i++) {
+            if (listadoActual[i].id === idProducto) {
+                productoIncorporar = JSON.parse(listadoActual[i])
+            }
+        }return productoIncorporar
     }
 }
 
